@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa do Hambúrguer - Cardápio Web</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-hamburger"></i>
+                    <span>Casa do Hambúrguer</span>
+                </div>
+                <div class="header-actions">
+                    <button class="cart-btn" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-text">Carrinho</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="admin-btn" onclick="toggleAdminLogin()">
+                        <i class="fas fa-user-shield"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Os Melhores Hambúrgueres</h1>
+                <p>Sabor artesanal que você nunca esquece</p>
+                <div class="hero-badge">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Delivery disponível
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nosso Cardápio</h2>
+                <p>Escolha entre nossos deliciosos hambúrgueres, bebidas e acompanhamentos</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-utensils"></i>
+                    Todos
+                </button>
+                <button class="category-btn" data-category="hamburgers">
+                    <i class="fas fa-hamburger"></i>
+                    Hambúrgueres
+                </button>
+                <button class="category-btn" data-category="drinks">
+                    <i class="fas fa-glass-water"></i>
+                    Bebidas
+                </button>
+                <button class="category-btn" data-category="sides">
+                    <i class="fas fa-french-fries"></i>
+                    Acompanhamentos
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Loading skeleton -->
+                <div class="loading-skeleton">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-hamburger"></i> Casa do Hambúrguer</h3>
+                    <p>Os melhores hambúrgueres artesanais da cidade. Feitos com ingredientes frescos e muito amor.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+                    <p><i class="fas fa-envelope"></i> contato@casadohamburguer.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horário</h4>
+                    <p>Segunda à Quinta: 18h - 23h</p>
+                    <p>Sexta e Sábado: 18h - 01h</p>
+                    <p>Domingo: 18h - 22h</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Casa do Hambúrguer. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-shopping-cart"></i> Carrinho</h2>
+                <button class="close-btn" onclick="toggleCart()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems">
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Carrinho vazio</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="cartFooter" style="display: none;">
+                <div class="customer-info">
+                    <input type="text" id="customerName" placeholder="Seu nome" required>
+                    <input type="tel" id="customerPhone" placeholder="Seu telefone" required>
+                </div>
+                <div class="cart-total">
+                    <div class="total-row">
+                        <span>Total: </span>
+                        <span class="total-price" id="totalPrice">R$ 0,00</span>
+                    </div>
+                    <button class="checkout-btn" onclick="submitOrder()">Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content admin-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-lock"></i> Área Administrativa</h2>
+                <button class="close-btn" onclick="toggleAdminLogin()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="adminEmail" required placeholder="admin@casadohamburguer.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="adminPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="login-btn">Entrar</button>
+                </form>
+                <div class="demo-info">
+                    <p><strong>Demo:</strong> admin@test.com / admin123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="adminPanelModal">
+        <div class="modal-content admin-panel">
+            <div class="modal-header admin-header">
+                <h2>Painel Administrativo</h2>
+                <div class="header-actions">
+                    <button class="logout-btn" onclick="adminLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                    <button class="close-btn" onclick="toggleAdminPanel()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body admin-body">
+                <div class="admin-actions">
+                    <button class="add-product-btn" onclick="showProductForm()">
+                        <i class="fas fa-plus"></i> Adicionar Produto
+                    </button>
+                </div>
+
+                <!-- Product Form -->
+                <div class="product-form" id="productForm" style="display: none;">
+                    <h3 id="formTitle">Novo Produto</h3>
+                    <form id="productFormElement">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nome do produto</label>
+                                <input type="text" id="productName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Preço</label>
+                                <input type="number" id="productPrice" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <textarea id="productDescription" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Categoria</label>
+                                <select id="productCategory" required>
+                                    <option value="hamburgers">Hambúrgueres</option>
+                                    <option value="drinks">Bebidas</option>
+                                    <option value="sides">Acompanhamentos</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="productAvailable" checked>
+                                    Disponível
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>URL da imagem</label>
+                            <input type="url" id="productImage" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">
+                                <i class="fas fa-save"></i> Salvar
+                            </button>
+                            <button type="button" class="cancel-btn" onclick="hideProductForm()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Products List -->
+                <div class="admin-products">
+                    <h3>Produtos</h3>
+                    <div class="admin-products-list" id="adminProductsList">
+                        <p class="loading">Carregando produtos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
