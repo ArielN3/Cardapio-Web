@@ -1,7 +1,7 @@
 // Configuração do Supabase
 const SUPABASE_CONFIG = {
-    url: 'https://uldbnnhcaizbnkjbyuod.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZGJubmhjYWl6Ym5ramJ5dW9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1ODQ1MTAsImV4cCI6MjA3NDE2MDUxMH0.f8rz4Gpxku6pCd9vuRmoDYggMhDYIeClfnnrQ4FGdw0'
+    url: 'https://zkbgstglzvamymjceylc.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprYmdzdGdsenZhbXltamNleWxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1ODMxNjYsImV4cCI6MjA3NDE1OTE2Nn0.lVHdfONcZv8Hp9J9JhZfoVvQPqddM90fW8Z3AhQHLYw'
 };
 
 // Verificar se as variáveis de ambiente estão configuradas
@@ -87,7 +87,7 @@ const MOCK_PRODUCTS = [
 ];
 
 // Credenciais de demonstração
-const DEMO_ADMIN = {
-    email: 'admin@test.com',
-    password: 'admin123'
-};
+//const DEMO_ADMIN = {
+  //  email: 'admin@test.com',
+   // password: 'admin123'
+//};
