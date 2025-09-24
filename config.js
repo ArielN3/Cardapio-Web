@@ -87,7 +87,13 @@ const MOCK_PRODUCTS = [
 ];
 
 // Credenciais de demonstração
-//const DEMO_ADMIN = {
-  //  email: 'admin@test.com',
-   // password: 'admin123'
-//};
+const DEMO_ADMIN = {
+    email: 'admin@test.com',
+    password: 'admin123'
+};
+
+// Configuração do WhatsApp
+const WHATSAPP_CONFIG = {
+    businessPhone: '5511999999999', // Substitua pelo número da hamburgueria
+    enabled: true
+};
