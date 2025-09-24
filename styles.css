@@ -860,6 +860,10 @@ body {
     background: #dc2626;
 }
 
+.toast i {
+    margin-right: 0.5rem;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
