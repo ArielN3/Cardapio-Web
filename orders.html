@@ -469,6 +469,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config.js"></script>
     <script src="supabase.js"></script>
+    <script src="whatsapp.js"></script>
     <script>
         let orders = [];
         let filteredOrders = [];
@@ -662,6 +663,13 @@
                     </button>
                 `);
             }
+            
+            // Botão WhatsApp sempre disponível
+            actions.push(`
+                <button class="status-btn whatsapp" onclick="sendWhatsAppUpdate('${order.id}', '${order.status}')" style="background: #25d366;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+            `);
 
             return `<div class="status-actions">${actions.join('')}</div>`;
         }
@@ -705,6 +713,13 @@
                 }
                 
                 showToast(`Status atualizado para: ${getStatusText(newStatus)}`, 'success');
+                
+                // Enviar notificação WhatsApp automaticamente
+                const order = orders.find(o => o.id === orderId);
+                if (order && confirm('Enviar notificação por WhatsApp?')) {
+                    whatsappService.sendStatusUpdate(order, newStatus);
+                }
+                
                 await loadOrders();
             } catch (error) {
                 console.error('Erro ao atualizar status:', error);
@@ -716,6 +731,14 @@
             if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
             
             await updateStatus(orderId, 'cancelled');
+        }
+        
+        function sendWhatsAppUpdate(orderId, currentStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                whatsappService.sendStatusUpdate(order, currentStatus);
+                showToast('WhatsApp aberto para envio!', 'success');
+            }
         }
 
         function showToast(message, type = 'success') {
