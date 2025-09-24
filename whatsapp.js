@@ -1,7 +1,7 @@
 // Integração com WhatsApp
 class WhatsAppService {
     constructor() {
-        this.businessPhone = '5511999999999'; // Substitua pelo número da hamburgueria
+        this.businessPhone = '61981227195'; // Substitua pelo número da hamburgueria
     }
 
     // Formatar número de telefone para WhatsApp
@@ -63,7 +63,7 @@ ${customerName}, seu pedido está PRONTO! 🎉
 🏃‍♂️ Pode vir buscar ou aguarde nosso entregador!
 
 📍 Endereço: Rua dos Sabores, 123
-📞 Dúvidas: (11) 99999-9999`,
+📞 Dúvidas: (61) 98122-7195`,
 
             delivered: `🚚 *Casa do Hambúrguer*
 
