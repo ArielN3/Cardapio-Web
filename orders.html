@@ -661,6 +661,9 @@
                     <button class="status-btn cancelled" onclick="cancelOrder('${order.id}')">
                         <i class="fas fa-times"></i> Cancelar Pedido
                     </button>
+                    <button class="status-btn delete" onclick="deleteOrder('${order.id}')" style="background: #dc2626;">
+                        <i class="fas fa-trash"></i> Excluir Pedido
+                    </button>
                 `);
             }
             
@@ -731,6 +734,32 @@
             if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
             
             await updateStatus(orderId, 'cancelled');
+        }
+        
+        async function deleteOrder(orderId) {
+            if (!confirm('⚠️ ATENÇÃO: Esta ação não pode ser desfeita!\n\nTem certeza que deseja EXCLUIR permanentemente este pedido?')) {
+                return;
+            }
+            
+            // Segunda confirmação para segurança
+            if (!confirm('Confirma a EXCLUSÃO PERMANENTE do pedido?\n\nEsta ação removerá todos os dados do pedido do sistema.')) {
+                return;
+            }
+            
+            try {
+                const { error } = await deleteOrderFromDB(orderId);
+                
+                if (error) {
+                    showToast('Erro ao excluir pedido', 'error');
+                    return;
+                }
+                
+                showToast('Pedido excluído permanentemente!', 'success');
+                await loadOrders();
+            } catch (error) {
+                console.error('Erro ao excluir pedido:', error);
+                showToast('Erro ao excluir pedido', 'error');
+            }
         }
         
         function sendWhatsAppUpdate(orderId, currentStatus) {
