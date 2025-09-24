@@ -282,6 +282,10 @@ function toggleAdminPanel() {
     }
 }
 
+function openOrdersPage() {
+    window.open('orders.html', '_blank');
+}
+
 // Autenticação
 async function checkAuthStatus() {
     try {
