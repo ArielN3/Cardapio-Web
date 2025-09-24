@@ -48,7 +48,7 @@ Oi ${customerName}!
 
 Seu pedido #${orderNumber} está sendo preparado! 
 
-🔥 Nossos chefs estão caprichando no seu hambúrguer...
+🔥Estamos preparando seu pedido da melhor forma...
 
 ⏰ Tempo estimado: 15-20 minutos
 📱 Te avisamos quando estiver prontinho!`,
