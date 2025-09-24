@@ -250,6 +250,14 @@ async function submitOrder() {
         document.getElementById('customerName').value = '';
         document.getElementById('customerPhone').value = '';
         toggleCart();
+        
+        // Enviar notificação via WhatsApp
+        setTimeout(() => {
+            if (confirm('Deseja enviar confirmação por WhatsApp?')) {
+                whatsappService.sendStatusUpdate(orderData, 'pending');
+                whatsappService.notifyNewOrder(orderData);
+            }
+        }, 1000);
     } catch (error) {
         console.error('Erro ao enviar pedido:', error);
         showToast('Erro ao enviar pedido: ' + error.message, 'error');
