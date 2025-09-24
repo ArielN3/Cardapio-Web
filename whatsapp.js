@@ -48,7 +48,7 @@ Oi ${customerName}!
 
 Seu pedido #${orderNumber} está sendo preparado! 
 
-🔥Estamos preparando seu pedido da melhor forma...
+🔥Seu pedido está em linha de produção...
 
 ⏰ Tempo estimado: 15-20 minutos
 📱 Te avisamos quando estiver prontinho!`,
