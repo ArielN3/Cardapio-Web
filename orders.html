@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Pedidos - Casa do Hambúrguer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .orders-page {
+            min-height: 100vh;
+            background: #f8f9fa;
+            padding: 2rem 0;
+        }
+        
+        .orders-header {
+            background: #dc2626;
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .orders-header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .orders-header p {
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .back-btn {
+            background: #b91c1c;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+        }
+        
+        .orders-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .orders-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .orders-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+        
+        .filter-btn:hover {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+        
+        .filter-btn.active:hover {
+            background: #b91c1c;
+        }
+        
+        .orders-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #dc2626;
+            transition: all 0.3s ease;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            color: #1f2937;
+            font-size: 1.1rem;
+        }
+        
+        .order-time {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-pending { 
+            background: #fef3c7; 
+            color: #92400e; 
+            border: 2px solid #f59e0b;
+        }
+        
+        .status-preparing { 
+            background: #dbeafe; 
+            color: #1e40af; 
+            border: 2px solid #3b82f6;
+        }
+        
+        .status-ready { 
+            background: #d1fae5; 
+            color: #065f46; 
+            border: 2px solid #10b981;
+        }
+        
+        .status-delivered { 
+            background: #e5e7eb; 
+            color: #374151; 
+            border: 2px solid #6b7280;
+        }
+        
+        .status-cancelled { 
+            background: #fee2e2; 
+            color: #991b1b; 
+            border: 2px solid #ef4444;
+        }
+        
+        .order-customer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        
+        .customer-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .customer-info i {
+            color: #dc2626;
+            width: 16px;
+        }
+        
+        .order-items {
+            margin-bottom: 1rem;
+        }
+        
+        .order-items h4 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-weight: 500;
+        }
+        
+        .item-quantity {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .order-total {
+            text-align: right;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #fef2f2;
+            border-radius: 8px;
+        }
+        
+        .status-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .status-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .status-btn.preparing { 
+            background: #3b82f6; 
+            color: white; 
+        }
+        
+        .status-btn.ready { 
+            background: #10b981; 
+            color: white; 
+        }
+        
+        .status-btn.delivered { 
+            background: #6b7280; 
+            color: white; 
+        }
+        
+        .status-btn.cancelled { 
+            background: #ef4444; 
+            color: white; 
+        }
+        
+        .empty-orders {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6b7280;
+        }
+        
+        .empty-orders i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+        
+        .empty-orders h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .loading-spinner i {
+            font-size: 3rem;
+            color: #dc2626;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .refresh-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .refresh-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .orders-header h1 {
+                font-size: 2rem;
+            }
+            
+            .order-customer {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .status-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="orders-page">
+        <!-- Header -->
+        <div class="orders-header">
+            <div class="container">
+                <h1><i class="fas fa-clipboard-list"></i> Gerenciar Pedidos</h1>
+                <p>Controle todos os pedidos em tempo real</p>
+            </div>
+        </div>
+
+        <div class="orders-container">
+            <!-- Back Button -->
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Voltar ao Cardápio
+            </a>
+
+            <!-- Statistics -->
+            <div class="orders-stats" id="ordersStats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalOrders">0</div>
+                    <div class="stat-label">Total de Pedidos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingOrders">0</div>
+                    <div class="stat-label">Pendentes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="preparingOrders">0</div>
+                    <div class="stat-label">Preparando</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="readyOrders">0</div>
+                    <div class="stat-label">Prontos</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="orders-filters">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>Filtrar Pedidos</h3>
+                    <button class="refresh-btn" onclick="loadOrders()">
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar
+                    </button>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-status="all">
+                        <i class="fas fa-list"></i> Todos
+                    </button>
+                    <button class="filter-btn" data-status="pending">
+                        <i class="fas fa-clock"></i> Pendentes
+                    </button>
+                    <button class="filter-btn" data-status="preparing">
+                        <i class="fas fa-fire"></i> Preparando
+                    </button>
+                    <button class="filter-btn" data-status="ready">
+                        <i class="fas fa-check-circle"></i> Prontos
+                    </button>
+                    <button class="filter-btn" data-status="delivered">
+                        <i class="fas fa-truck"></i> Entregues
+                    </button>
+                </div>
+            </div>
+
+            <!-- Orders Grid -->
+            <div class="orders-grid" id="ordersGrid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner"></i>
+                    <p>Carregando pedidos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase.js"></script>
+    <script>
+        let orders = [];
+        let filteredOrders = [];
+        let activeFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            await initSupabase();
+            await loadOrders();
+            setupEventListeners();
+            
+            // Atualizar pedidos automaticamente a cada 30 segundos
+            setInterval(loadOrders, 30000);
+        });
+
+        function setupEventListeners() {
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const status = this.dataset.status;
+                    setActiveFilter(status);
+                });
+            });
+        }
+
+        async function loadOrders() {
+            try {
+                const { data, error } = await getOrders();
+                
+                if (error) {
+                    console.error('Erro ao carregar pedidos:', error);
+                    showToast('Erro ao carregar pedidos', 'error');
+                    return;
+                }
+                
+                orders = data || [];
+                updateStats();
+                filterOrders();
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+                showToast('Erro ao carregar pedidos', 'error');
+            }
+        }
+
+        function updateStats() {
+            const stats = {
+                total: orders.length,
+                pending: orders.filter(o => o.status === 'pending').length,
+                preparing: orders.filter(o => o.status === 'preparing').length,
+                ready: orders.filter(o => o.status === 'ready').length,
+                delivered: orders.filter(o => o.status === 'delivered').length
+            };
+
+            document.getElementById('totalOrders').textContent = stats.total;
+            document.getElementById('pendingOrders').textContent = stats.pending;
+            document.getElementById('preparingOrders').textContent = stats.preparing;
+            document.getElementById('readyOrders').textContent = stats.ready;
+        }
+
+        function setActiveFilter(status) {
+            activeFilter = status;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-status="${status}"]`).classList.add('active');
+            
+            filterOrders();
+        }
+
+        function filterOrders() {
+            if (activeFilter === 'all') {
+                filteredOrders = [...orders];
+            } else {
+                filteredOrders = orders.filter(order => order.status === activeFilter);
+            }
+            
+            renderOrders();
+        }
+
+        function renderOrders() {
+            const grid = document.getElementById('ordersGrid');
+            
+            if (filteredOrders.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-orders">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Nenhum pedido encontrado</h3>
+                        <p>Os pedidos aparecerão aqui quando forem realizados</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Ordenar por data (mais recentes primeiro)
+            const sortedOrders = filteredOrders.sort((a, b) => 
+                new Date(b.created_at) - new Date(a.created_at)
+            );
+            
+            grid.innerHTML = sortedOrders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Pedido #${order.id.slice(-8).toUpperCase()}</div>
+                            <div class="order-time">
+                                <i class="fas fa-clock"></i>
+                                ${formatDateTime(order.created_at)}
+                            </div>
+                        </div>
+                        <div class="order-status status-${order.status}">
+                            ${getStatusText(order.status)}
+                        </div>
+                    </div>
+                    
+                    <div class="order-customer">
+                        <div class="customer-info">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <strong>Cliente:</strong><br>
+                                ${order.customer_name}
+                            </div>
+                        </div>
+                        <div class="customer-info">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Telefone:</strong><br>
+                                ${order.customer_phone}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-items">
+                        <h4><i class="fas fa-utensils"></i> Itens do Pedido:</h4>
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <div>
+                                    <span class="item-name">${item.name}</span>
+                                    <span class="item-quantity">x${item.quantity}</span>
+                                </div>
+                                <span class="item-price">R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="order-total">
+                        <i class="fas fa-calculator"></i>
+                        Total: R$ ${parseFloat(order.total).toFixed(2)}
+                    </div>
+                    
+                    ${renderStatusActions(order)}
+                </div>
+            `).join('');
+        }
+
+        function renderStatusActions(order) {
+            if (order.status === 'delivered' || order.status === 'cancelled') {
+                return '<div style="text-align: center; color: #6b7280; font-style: italic;">Pedido finalizado</div>';
+            }
+
+            let actions = [];
+            
+            if (order.status === 'pending') {
+                actions.push(`
+                    <button class="status-btn preparing" onclick="updateStatus('${order.id}', 'preparing')">
+                        <i class="fas fa-fire"></i> Iniciar Preparo
+                    </button>
+                `);
+            }
+            
+            if (order.status === 'preparing') {
+                actions.push(`
+                    <button class="status-btn ready" onclick="updateStatus('${order.id}', 'ready')">
+                        <i class="fas fa-check-circle"></i> Marcar como Pronto
+                    </button>
+                `);
+            }
+            
+            if (order.status === 'ready') {
+                actions.push(`
+                    <button class="status-btn delivered" onclick="updateStatus('${order.id}', 'delivered')">
+                        <i class="fas fa-truck"></i> Marcar como Entregue
+                    </button>
+                `);
+            }
+            
+            // Sempre permitir cancelar (exceto se já entregue)
+            if (order.status !== 'delivered') {
+                actions.push(`
+                    <button class="status-btn cancelled" onclick="cancelOrder('${order.id}')">
+                        <i class="fas fa-times"></i> Cancelar Pedido
+                    </button>
+                `);
+            }
+
+            return `<div class="status-actions">${actions.join('')}</div>`;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Pendente',
+                'preparing': 'Preparando',
+                'ready': 'Pronto',
+                'delivered': 'Entregue',
+                'cancelled': 'Cancelado'
+            };
+            return statusMap[status] || status;
+        }
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMinutes = Math.floor((now - date) / (1000 * 60));
+            
+            if (diffMinutes < 1) return 'Agora mesmo';
+            if (diffMinutes < 60) return `${diffMinutes} min atrás`;
+            if (diffMinutes < 1440) return `${Math.floor(diffMinutes / 60)}h atrás`;
+            
+            return date.toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        async function updateStatus(orderId, newStatus) {
+            try {
+                const { error } = await updateOrderStatus(orderId, newStatus);
+                
+                if (error) {
+                    showToast('Erro ao atualizar status', 'error');
+                    return;
+                }
+                
+                showToast(`Status atualizado para: ${getStatusText(newStatus)}`, 'success');
+                await loadOrders();
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+                showToast('Erro ao atualizar status', 'error');
+            }
+        }
+
+        async function cancelOrder(orderId) {
+            if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
+            
+            await updateStatus(orderId, 'cancelled');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
