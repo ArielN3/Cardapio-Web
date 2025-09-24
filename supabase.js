@@ -221,6 +221,40 @@ async function updateOrderStatus(orderId, status) {
     }
 }
 
+async function deleteOrderFromDB(orderId) {
+    if (!supabaseClient) {
+        return { data: null, error: { message: 'Modo demo - pedido não excluído' } };
+    }
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('orders')
+            .delete()
+            .eq('id', orderId);
+
+        return { data, error };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
+
+async function deleteOrderFromDB(orderId) {
+    if (!supabaseClient) {
+        return { data: null, error: { message: 'Modo demo - pedido não excluído' } };
+    }
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('orders')
+            .delete()
+            .eq('id', orderId);
+
+        return { data, error };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
+
 // Funções de categorias
 async function getCategories() {
     if (!supabaseClient) {
