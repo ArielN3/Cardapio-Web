@@ -579,8 +579,13 @@
                                 ${formatDateTime(order.created_at)}
                             </div>
                         </div>
-                        <div class="order-status status-${order.status}">
-                            ${getStatusText(order.status)}
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div class="order-status status-${order.status}">
+                                ${getStatusText(order.status)}
+                            </div>
+                            <button class="delete-order-btn" onclick="deleteOrder('${order.id}')" title="Excluir pedido permanentemente">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                     
@@ -660,9 +665,6 @@
                 actions.push(`
                     <button class="status-btn cancelled" onclick="cancelOrder('${order.id}')">
                         <i class="fas fa-times"></i> Cancelar Pedido
-                    </button>
-                    <button class="status-btn delete" onclick="deleteOrder('${order.id}')" style="background: #dc2626;">
-                        <i class="fas fa-trash"></i> Excluir Pedido
                     </button>
                 `);
             }
