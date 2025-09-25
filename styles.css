@@ -857,6 +857,24 @@ body {
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
+.delete-order-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.delete-order-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 /* Toast Notifications */
 .toast-container {
     position: fixed;
