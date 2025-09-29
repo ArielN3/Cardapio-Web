@@ -905,6 +905,23 @@ body {
 .toast i {
     margin-right: 0.5rem;
 }
+.developer-credit {
+    font-size: 0.8rem;       /* Tamanho menor que o texto principal */
+    color: #aaa;             /* Cor cinza clara */
+    text-align: center;      /* Centralizado */
+    margin-top: 0.5rem;      /* Espaço acima */
+    font-style: italic;      /* Itálico para dar destaque sutil */
+}
+
+.developer-credit a {
+    color: #f59e0b;          /* Cor do link (amarela/dourada) */
+    text-decoration: none;   /* Remove underline */
+    transition: color 0.3s;  /* Transição suave ao passar o mouse */
+}
+
+.developer-credit a:hover {
+    color: #eab308;          /* Cor ao passar o mouse */
+}
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -995,3 +1012,4 @@ body {
         text-align: center;
     }
 }
+
