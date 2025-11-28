@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delícias da Mah - Cardápio Web</title>
+    
+    <title> Cardápio Web</title>
+      <link rel="shortcut icon" href="favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -14,7 +16,7 @@
             <div class="header-content">
                 <div class="logo">
                    <!-- <i class="fas fa-hamburger"></i>-->
-                    <span>Delícias da Mah</span>
+                    <span>Casa do Hambúrguer</span>
                 </div>
                 <div class="header-actions">
                     <button class="cart-btn" onclick="toggleCart()">
@@ -34,7 +36,7 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Trufados Gourmet</h1>
+                <h1>Melhores da Cidades</h1>
                 <p>Sabor artesanal que você nunca esquece</p>
                 <div class="hero-badge">
                     <i class="fas fa-map-marker-alt"></i>
@@ -60,15 +62,15 @@
                 </button>
                 <button class="category-btn" data-category="hamburgers">
                     <i class="fas fa-hamburger"></i>
-                    Brigadeiros
+                    hambúrgers
                 </button>
                 <button class="category-btn" data-category="drinks">
                     <i class="fas fa-glass-water"></i>
-                    Coxinhas recheadas
+                    Bebidas
                 </button>
                 <button class="category-btn" data-category="sides">
                     <i class="fas fa-french-fries"></i>
-                    Trufas
+                    Acompanhamentos
                 </button>
             </div>
 
@@ -217,9 +219,9 @@
                             <div class="form-group">
                                 <label>Categoria</label>
                                 <select id="productCategory" required>
-                                    <option value="hamburgers">Brigadeiros</option>
-                                    <option value="drinks">Coxinhas Recheadas</option>
-                                    <option value="sides">Trufas</option>
+                                    <option value="hamburgers">Hambúrguer</option>
+                                    <option value="drinks">bebidas</option>
+                                    <option value="sides">Acompanhamentos</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -240,6 +242,7 @@
                             <button type="button" class="cancel-btn" onclick="hideProductForm()">Cancelar</button>
                         </div>
                     </form>
+                    
                 </div>
 
                 <!-- Products List -->
@@ -264,7 +267,6 @@
     <script src="script.js"></script>
 </body>
 </html>
-
 
 
 
