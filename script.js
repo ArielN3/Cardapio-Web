@@ -363,7 +363,9 @@ async function loadAdminProducts() {
             productsList.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 2rem;">Nenhum produto encontrado</p>';
             return;
         }
-        
+         /*<button class="edit-btn" onclick="editProduct('${product.id}')">
+                        <i class="fas fa-edit"></i>
+                    </button>*/
         productsList.innerHTML = data.map(product => `
             <div class="admin-product-item">
                 <img src="${product.image_url}" alt="${product.name}" class="admin-product-image">
@@ -379,9 +381,7 @@ async function loadAdminProducts() {
                     </div>
                 </div>
                 <div class="admin-product-actions">
-                    <button class="edit-btn" onclick="editProduct('${product.id}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
+                   
                     <button class="delete-btn" onclick="deleteProductConfirm('${product.id}')">
                         <i class="fas fa-trash"></i>
                     </button>
